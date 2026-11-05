@@ -1,0 +1,31 @@
+name: Error
+description: Un fallo reproducible de Lingo.
+title: "fix: "
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Cómo reproducirlo
+      description: Pasos mínimos, entorno y versión.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado actual
+      description: Qué ocurre. No incluyas claves ni datos personales.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Cómo verificar la corrección
+      description: Caso que debe funcionar y prueba de regresión si corresponde.
+    validations:
+      required: true

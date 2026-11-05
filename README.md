@@ -61,3 +61,7 @@ El logger solo admite eventos conocidos y campos técnicos explícitos. No recib
 Las cabeceras de seguridad están en next.config.ts. La CSP inicial permite scripts inline para el arranque de Next.js; en desarrollo permite además eval y WebSockets. Se evaluará una política con nonce al completar la interfaz.
 
 Despliegue previsto en Vercel en la fase 6.
+
+## Trabajo con issues y PRs
+
+Seguimos CONTRIBUTING.md: issue → rama de tarea → PR a develop → PR de entrega a main. main se reserva para producción y develop para integración. El CI comprueba formato, lint, tipos, pruebas y build antes de fusionar cambios. Consulta la [guía de colaboración](CONTRIBUTING.md).

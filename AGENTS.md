@@ -7,3 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Flujo del repositorio
+
+Lee CONTRIBUTING.md antes de implementar cambios. Cada avance parte de un issue y una rama de tarea creada desde develop. Abre PRs hacia develop; las entregas a main proceden de develop. No hagas commits ni pushes directos a main o develop. Conserva main como rama de producción y develop como integración. El usuario revisa el resultado antes de autorizar una fusión. Actualiza docs/avance.md y ejecuta las verificaciones correspondientes a cada cambio.
