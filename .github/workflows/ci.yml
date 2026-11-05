@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      TRANSLATION_PROVIDER: deepl
+      DEEPL_API_KEY: ci-placeholder
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/lingo
+      UPSTASH_REDIS_REST_URL: https://example.upstash.io
+      UPSTASH_REDIS_REST_TOKEN: ci-placeholder
+    steps:
+      - name: Comprobar origen de entregas
+        if: github.event_name == 'pull_request' && github.base_ref == 'main'
+        env:
+          SOURCE_BRANCH: ${{ github.head_ref }}
+        run: |
+          if [ "$SOURCE_BRANCH" != "develop" ]; then
+            echo "Las entregas a main deben proceder de develop."
+            exit 1
+          fi
+      - name: Obtener código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Preparar Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Preparar pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          cache: true
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Comprobar formato
+        run: pnpm format:check
+      - name: Comprobar lint
+        run: pnpm lint --max-warnings 0
+      - name: Comprobar tipos
+        run: pnpm typecheck
+      - name: Ejecutar pruebas unitarias
+        run: pnpm test
+      - name: Compilar producción
+        run: pnpm build
