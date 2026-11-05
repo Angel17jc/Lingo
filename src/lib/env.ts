@@ -4,14 +4,8 @@ import { z } from "zod";
 const envSchema = z.object({
   TRANSLATION_PROVIDER: z.enum(["deepl", "azure"]).default("deepl"),
   DEEPL_API_KEY: z.string().trim().min(1),
-  DATABASE_URL: z
-    .url()
-    .refine((value) =>
-      ["postgres:", "postgresql:"].includes(new URL(value).protocol),
-    ),
-  UPSTASH_REDIS_REST_URL: z
-    .url()
-    .refine((value) => new URL(value).protocol === "https:"),
+  DATABASE_URL: z.url({ protocol: /^postgres(ql)?$/ }),
+  UPSTASH_REDIS_REST_URL: z.url({ protocol: /^https$/ }),
   UPSTASH_REDIS_REST_TOKEN: z.string().trim().min(1),
 });
 
