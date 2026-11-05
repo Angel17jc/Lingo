@@ -1,5 +1,17 @@
 # Registro de avances
 
+## 2026-11-05 — Revisión de la fase 1
+
+- Los commits iniciales de la fase 1 ya existían: b867b03 (base) y a7d26fc (documentación).
+- Se reprodujo un fallo: una URL mal formada lanzaba TypeError dentro del refinamiento e impedía el mensaje seguro de configuración.
+- Corrección: usar la validación nativa de protocolo de Zod para PostgreSQL y Redis HTTPS.
+- Se añadieron 14 pruebas de regresión para configuración válida, proveedor por defecto, protocolos, URLs mal formadas y variables ausentes. Se comprueba que los errores no muestran credenciales.
+- Se declaró type=module en package.json para que Vitest interprete la configuración ESM sin advertencias.
+- Verificación posterior: pnpm test (14 pruebas), lint --max-warnings 0, typecheck, format:check y build correctos.
+- El build usa valores temporales sin acceder a servicios externos. Credenciales reales, revisión visual y conexiones reales siguen pendientes.
+- Revisión técnica de fase 1 terminada. La fase 2 no se ha iniciado.
+- Commits locales; no se realizó push a GitHub.
+
 ## 2026-11-05 — Fase 1: base técnica
 
 - pnpm 12.16.1 instalado y fijado en package.json.
@@ -34,8 +46,8 @@
 - Se autorizó únicamente el script de instalación de esbuild en pnpm-workspace.yaml.
 - La CSP inicial permite scripts inline para Next.js. Evaluar nonce con la interfaz final.
 - No se han configurado credenciales reales ni creado .env.local. Para trabajar con credenciales reales, copiar .env.example y completar localmente.
-- No hay pruebas unitarias/e2e todavía: corresponden a las fases 2 y 6.
-- Falta revisar la fase 1 con el usuario antes de comenzar la fase 2.
+- La revisión añadió pruebas unitarias de configuración; las del motor y los e2e corresponden a las fases 2 y 6.
+- Revisión técnica completada; esperar la indicación del usuario para comenzar la fase 2.
 
 ## 2026-11-05 — Preparación inicial
 
@@ -52,7 +64,7 @@ Tras la revisión, comenzar la fase 2 en pasos pequeños: esquemas y errores de 
 ## Fases
 
 - [ ] 0: completar cuentas y credenciales externas cuando correspondan.
-- [x] 1: base técnica implementada y verificada con valores temporales; pendiente revisión del usuario.
+- [x] 1: base técnica implementada, revisada y verificada con valores temporales.
 - [ ] 2: motor de traducción.
 - [ ] 3: interfaz.
 - [ ] 4: caché con Neon.

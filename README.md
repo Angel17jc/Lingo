@@ -37,13 +37,14 @@ pnpm dev
 pnpm typecheck
 pnpm lint
 pnpm format:check
+pnpm test
 pnpm build
 pnpm start
 ```
 
-La aplicación se abre en http://localhost:3000. El hook de pre-commit aplica ESLint y Prettier sobre los archivos preparados.
+Si PowerShell bloquea pnpm.ps1, usa pnpm.cmd en los comandos (por ejemplo, pnpm.cmd dev), sin cambiar la política de ejecución. La aplicación se abre en http://localhost:3000. El hook de pre-commit aplica ESLint y Prettier sobre los archivos preparados.
 
-Vitest está configurado con entorno Node y alias @. Los scripts test, test:watch y e2e están reservados para las fases 2 y 6: aún no hay pruebas ni configuración de Playwright.
+Vitest está configurado con entorno Node y alias @. Ejecuta pnpm test para las 14 pruebas de configuración del servidor. Las pruebas del motor llegarán en la fase 2; e2e y la configuración de Playwright corresponden a la fase 6.
 
 ## Arquitectura
 
