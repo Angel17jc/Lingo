@@ -1,4 +1,4 @@
-﻿node_modules/
+node_modules/
 .next/
 out/
 coverage/
@@ -8,3 +8,4 @@ test-results/
 !.env.example
 *.tsbuildinfo
 .vercel/
+next-env.d.ts

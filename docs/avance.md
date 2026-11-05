@@ -9,6 +9,7 @@
 - Se declaró type=module en package.json para que Vitest interprete la configuración ESM sin advertencias.
 - Verificación posterior: pnpm test (14 pruebas), lint --max-warnings 0, typecheck, format:check y build correctos.
 - El build usa valores temporales sin acceder a servicios externos. Credenciales reales, revisión visual y conexiones reales siguen pendientes.
+- next-env.d.ts queda fuera de Git por ser generado; typecheck ejecuta next typegen antes de tsc para preparar los tipos en un checkout nuevo.
 - Revisión técnica de fase 1 terminada. La fase 2 no se ha iniciado.
 - Commits locales; no se realizó push a GitHub.
 
