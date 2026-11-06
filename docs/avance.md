@@ -1,5 +1,16 @@
 # Registro de avances
 
+## 2026-11-05 — Cierre de sesión y continuidad (issue #11)
+
+- El usuario revisó y aprobó la UI. PR #10 fusionado a develop: 32ab8aa; issue #9 cerrado.
+- Fases 1–3 completadas e integradas. CI del merge de develop aprobado.
+- Últimas verificaciones funcionales: 160 pruebas unitarias, 9 escenarios de Chromium, tipos, lint, formato y build correctos.
+- Documento de continuidad completo en docs/continuidad.md, enlazado desde AGENTS.md y README.
+- DeepL real configurado y probado; Neon y Redis siguen con valores locales de prueba. No se guardan secretos en documentación.
+- main permanece en 1fc6c33; no hay despliegue ni entrega a main.
+- Este cierre solo modifica documentación. La fase 4 no se inicia hasta una nueva indicación del usuario.
+- La documentación de cierre se publica en chore/11-cierre-sesion mediante PR hacia develop, pendiente de revisión; no dar ese PR por fusionado al retomar.
+
 ## 2026-11-05 — Fase 3: interfaz y experiencia (issue #9)
 
 - Fase 2 integrada mediante PR #8 en develop: 2cd0fe0. Issue #7 cerrado y traducción real verificada antes de comenzar esta fase.
@@ -164,14 +175,14 @@
 
 ## Siguiente avance
 
-Revisar la interfaz de la fase 3 e integrar su PR a develop. Después, comenzar fase 4: esquema Drizzle y caché con Neon, en issues y PRs pequeños.
+Leer docs/continuidad.md y comprobar el PR de documentación de cierre. Las fases 1–3 ya están integradas; cuando el usuario pida retomar, comenzar la fase 4 (caché con Neon) mediante un nuevo issue y rama desde develop.
 
 ## Fases
 
 - [ ] 0: completar cuentas y credenciales externas cuando correspondan.
 - [x] 1: base técnica implementada, revisada y verificada con valores temporales.
 - [x] 2: motor de traducción integrado y prueba real aprobada.
-- [ ] 3: interfaz.
+- [x] 3: interfaz aprobada por el usuario e integrada mediante PR #10.
 - [ ] 4: caché con Neon.
 - [ ] 5: protección y cuotas.
 - [ ] 6: calidad y despliegue.
