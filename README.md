@@ -6,7 +6,7 @@ Repositorio: https://github.com/Angel17jc/Lingo
 
 ## Estado
 
-Fase 1: base técnica. La página es provisional; el motor, el formulario, la caché y la protección se incorporarán en las siguientes fases. Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
+Fase 1 completada. Primer avance de la fase 2: contratos de traducción y errores de dominio, preparados para revisión. La página es provisional; la integración de DeepL, el formulario, la caché y la protección se incorporarán en los siguientes avances. Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
 
 ## Instalación local
 
@@ -44,7 +44,7 @@ pnpm start
 
 Si PowerShell bloquea pnpm.ps1, usa pnpm.cmd en los comandos (por ejemplo, pnpm.cmd dev), sin cambiar la política de ejecución. La aplicación se abre en http://localhost:3000. El hook de pre-commit aplica ESLint y Prettier sobre los archivos preparados.
 
-Vitest está configurado con entorno Node y alias @. Ejecuta pnpm test para las 14 pruebas de configuración del servidor. Las pruebas del motor llegarán en la fase 2; e2e y la configuración de Playwright corresponden a la fase 6.
+Vitest está configurado con entorno Node y alias @. Ejecuta pnpm test para las pruebas de configuración, esquemas de traducción y errores de dominio. Los e2e y la configuración de Playwright corresponden a la fase 6.
 
 ## Arquitectura
 
@@ -52,7 +52,7 @@ Vitest está configurado con entorno Node y alias @. Ejecuta pnpm test para las 
 - src/features/translator: componentes, hooks y esquemas compartidos.
 - src/server: servicios, proveedores, caché y base de datos.
 - src/lib: configuración de servidor, catálogo de idiomas y logger.
-- src/tests: pruebas unitarias de las siguientes fases.
+- src/tests: pruebas unitarias de configuración y contratos de traducción.
 
 La presentación dependerá de los servicios; los servicios dependerán de interfaces para permitir cambiar de proveedor. No se han implementado traducciones ni conexiones a Neon o Redis.
 

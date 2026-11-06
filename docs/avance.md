@@ -1,5 +1,21 @@
 # Registro de avances
 
+## 2026-11-05 — Fase 2, avance 1: contratos (issue #3)
+
+- PR #2 autorizado por el usuario y fusionado con squash a develop: 28d9f70.
+- Issue #1 cerrado después de verificar su integración. main conserva la fase 1.
+- Rama de trabajo creada desde develop: feat/3-contratos-traduccion.
+- Esquemas Zod compartidos para solicitud/respuesta y tipos inferidos TranslateRequest y TranslateResponse.
+- Entrada: trim en los extremos, 1–3000 unidades UTF-16 (la longitud estándar de JavaScript), origen opcional y destino obligatorio, códigos derivados del catálogo y rechazo de campos inesperados.
+- El origen acepta EN/PT y el destino sus variantes regionales. La autodetección se solicita omitiendo source.
+- La respuesta conserva el texto traducido, permite que supere la longitud de entrada y admite idiomas detectados fuera de los selectores.
+- Errores con mensajes públicos fijos: ValidationError (400), RateLimitError (429), ProviderError (502) y QuotaExceededError (503), sobre DomainError.
+- RateLimitError exige retryAfterSeconds entero positivo seguro para la futura cabecera Retry-After.
+- Ajuste de .gitattributes a LF en archivos de texto: evita fallos locales de Prettier tras cambiar de rama en Windows.
+- Verificación local: 78 pruebas en 3 archivos, tipos, formato, lint sin advertencias y build correctos. No se añadieron dependencias.
+- El CI remoto se comprueba en el PR hacia develop antes de solicitar revisión.
+- Pendiente integrar este PR; el issue #3 permanece abierto hasta entonces. El adaptador DeepL, el servicio y la API son los siguientes avances.
+
 ## 2026-11-05 — Flujo de colaboración (issue #1)
 
 - La fase 1 ya está publicada en origin/main hasta 1fc6c33.
@@ -76,7 +92,7 @@
 
 ## Siguiente avance
 
-Tras la revisión, comenzar la fase 2 en pasos pequeños: esquemas y errores de dominio, interfaz del proveedor, adaptador DeepL, servicio y endpoint con pruebas.
+Tras revisar e integrar el avance del issue #3, continuar la fase 2 con la interfaz del proveedor y el adaptador DeepL. Después se implementarán el servicio y el endpoint con sus pruebas.
 
 ## Fases
 
