@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { sourceLanguages, targetLanguages } from "@/lib/languages";
 
+export const MAX_TRANSLATION_CHARACTERS = 3000;
+
 const sourceLanguageSchema = z.enum(
   sourceLanguages.map((language) => language.code),
 );
@@ -9,7 +11,7 @@ const targetLanguageSchema = z.enum(
 );
 
 export const translateRequestSchema = z.strictObject({
-  text: z.string().trim().min(1).max(3000),
+  text: z.string().trim().min(1).max(MAX_TRANSLATION_CHARACTERS),
   source: sourceLanguageSchema.optional(),
   target: targetLanguageSchema,
 });
