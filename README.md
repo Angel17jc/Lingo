@@ -6,7 +6,7 @@ Repositorio: https://github.com/Angel17jc/Lingo
 
 ## Estado
 
-Fase 1 completada; contratos y proveedor DeepL integrados en develop. Tercer avance de la fase 2: servicio y POST /api/translate preparados para revisión. La página sigue siendo provisional. Falta verificar una traducción real con credenciales locales antes de cerrar la fase 2. Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
+Fase 1 completada; contratos y proveedor DeepL integrados en develop. Tercer avance de la fase 2: servicio y POST /api/translate preparados para revisión. La página sigue siendo provisional. La traducción real con DeepL ya está verificada; falta revisar e integrar este avance para cerrar la fase 2. Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
 
 ## Instalación local
 
@@ -72,7 +72,7 @@ TRANSLATION_PROVIDER=deepl selecciona DeepL API Free. La clave permanece en el s
 
 TRANSLATION_PROVIDER=azure selecciona un stub todavía no implementado que devuelve un ProviderError controlado. No es un proveedor funcional.
 
-Se mantiene el mapeo de 429/456 a cuota agotada de la guía de Lingo; la diferencia con la recomendación actual de DeepL está documentada en el registro de avances. El endpoint está implementado; la comprobación con una clave real sigue pendiente. Las pruebas automatizadas no usan credenciales reales.
+Se mantiene el mapeo de 429/456 a cuota agotada de la guía de Lingo; la diferencia con la recomendación actual de DeepL está documentada en el registro de avances. El endpoint está implementado y la comprobación con una clave real pasó con origen explícito y autodetección. La suite unitaria y el CI siguen usando proveedores simulados.
 
 ## Probar la API
 
@@ -89,4 +89,4 @@ Los errores tienen forma { error: { code, message, retryAfterSeconds? } }. La AP
 
 Todas las respuestas POST llevan Cache-Control: no-store. La caché, la protección de cuota, el rate limiting y el límite de bytes del body se implementarán en sus fases. El límite de texto de 3000 unidades UTF-16 ya se valida con Zod.
 
-El checklist de la fase 2 sigue abierto hasta revisar este avance y verificar una traducción real con DeepL. No publiques claves en el chat ni en GitHub.
+El checklist técnico de la fase 2 está verificado; queda revisar e integrar este avance. No publiques claves en el chat ni en GitHub.

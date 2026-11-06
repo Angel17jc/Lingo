@@ -1,5 +1,16 @@
 # Registro de avances
 
+## 2026-11-05 — Prueba real de DeepL (issue #7)
+
+- Clave local aceptada por DeepL, sin mostrarla ni incluirla en Git.
+- POST /api/translate probado contra el servidor local de producción y el proveedor real.
+- Origen explícito ES: "Hola mundo" → "Hello, world", HTTP 200, detectedSource ES y cached false.
+- Autodetección verificada con una frase española más larga: HTTP 200, traducción correcta y detectedSource ES.
+- Respuestas correctas con Cache-Control: no-store. Texto vacío rechazado con HTTP 400.
+- Servidor local cerrado tras las comprobaciones. Neon y Redis no se utilizaron.
+- El checklist técnico de fase 2 está verificado; queda revisar e integrar el PR #8 antes de cerrar la fase.
+- Sin cambios de código: este avance solo registra la comprobación real.
+
 ## 2026-11-05 — Fase 2, avance 3: servicio y API (issue #7)
 
 - PR #6 autorizado y fusionado con squash a develop: 52e6abc. Issue #5 cerrado.
@@ -21,7 +32,7 @@
 - [x] Texto vacío devuelve 400 (prueba unitaria y HTTP local).
 - [x] Clave rechazada devuelve 502 sin detalles internos (DeepL 403 simulado).
 - [x] pnpm test pasa: 141 pruebas.
-- [ ] Validar traducción real con DeepL y credenciales locales; no existe .env.local.
+- [x] Traducción real verificada con DeepL y credenciales locales, con origen explícito y autodetección.
 - [ ] Revisar e integrar el PR del servicio y la API antes de cerrar la fase.
 
 ## 2026-11-05 — Fase 2, avance 2: proveedores (issue #5)
@@ -136,7 +147,7 @@
 
 ## Siguiente avance
 
-Revisar e integrar el avance del issue #7 y validar una traducción real con DeepL usando credenciales configuradas localmente. Completar el checklist de la fase 2 antes de comenzar la fase 3 (interfaz).
+Revisar e integrar el PR #8 del issue #7; la traducción real ya está verificada. Cerrar la fase 2 tras esa revisión antes de comenzar la fase 3 (interfaz).
 
 ## Fases
 
