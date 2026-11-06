@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "@/lib/env";
+import { messages } from "@/lib/messages";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lingo",
-  description: "Tu próximo espacio para traducir entre idiomas.",
+  title: messages.meta.title,
+  description: messages.meta.description,
 };
 
 export default function RootLayout({
