@@ -20,7 +20,7 @@ El estado resumido aquí prevalece sobre anotaciones históricas del registro qu
 - Último commit integrado en develop confirmado al retomar: **0c3a8fc**, cierre documental [#12](https://github.com/Angel17jc/Lingo/pull/12), con quality aprobado.
 - **Fases 1, 2 y 3 completadas, revisadas por el usuario e integradas en develop.**
 - El usuario revisó la UI y la aprobó expresamente. Conservar su diseño al trabajar en las fases siguientes.
-- **Fase 4 iniciada en el [issue #13](https://github.com/Angel17jc/Lingo/issues/13)**, rama **feat/13-base-cache-traducciones** desde develop actualizado: esquema, migración y hash. Pendiente de revisión e integración. El adaptador y la conexión a Neon corresponden al siguiente avance.
+- **Fase 4 iniciada en el [issue #13](https://github.com/Angel17jc/Lingo/issues/13)**, rama **feat/13-base-cache-traducciones** desde develop actualizado: esquema, migración y hash. PR [#14](https://github.com/Angel17jc/Lingo/pull/14) hacia develop, pendiente de revisión e integración. El adaptador y la conexión a Neon corresponden al siguiente avance.
 - main sigue en **1fc6c33**, la base inicial. No contiene todavía el motor ni la UI integrada en develop.
 - No hay despliegue en Vercel ni una URL pública de producción. main está reservada para producción, pero no se ha hecho la entrega develop → main.
 - El [issue #11](https://github.com/Angel17jc/Lingo/issues/11) se cerró al retomar, tras confirmar la integración de #12. No repetir la fusión ni crear otro cierre.
@@ -143,7 +143,7 @@ Drizzle, Neon y Upstash ya están instalados. El issue #13 prepara esquema, migr
 
 Últimos resultados verificados:
 
-- **Issue #13: 182 pruebas unitarias, tipos, lint, formato, generación/comprobación de migraciones y build correctos.** Build con variables temporales y sin servicios externos. CI del nuevo PR pendiente de confirmar en GitHub.
+- **Issue #13: 182 pruebas unitarias, tipos, lint, formato, generación/comprobación de migraciones y build correctos.** Build con variables temporales y sin servicios externos. El estado actual del CI se consulta en el [PR #14](https://github.com/Angel17jc/Lingo/pull/14).
 - Última verificación de UI (fase 3): **9 escenarios de Chromium correctos**.
 - CI del commit integrado 32ab8aa: https://github.com/Angel17jc/Lingo/actions/runs/42153255959, aprobado.
 - E2e: teclado, copia/fallback, intercambio, límites, cancelación, respuestas antiguas, errores, cuenta atrás, tema y layout.

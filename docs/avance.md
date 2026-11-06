@@ -13,7 +13,7 @@
 - db:generate repetido sin cambios y db:check correcto. Se añade db:check al check quality del CI para comprobar el historial sin conexión. Los 9 e2e de la UI mantienen su última verificación de fase 3.
 - Guía de SQL y migración en docs/cache-neon.md; continuidad, instrucciones y README actualizados.
 - El cliente Neon, el adaptador, la integración de servicio y la limpieza corresponden al siguiente PR. cached sigue siendo false. La UI aprobada y .env.local se conservan.
-- Pendiente revisión e integración del avance; el issue #13 permanece abierto. La fase 4 no está completada ni se ha iniciado la fase 5.
+- PR [#14](https://github.com/Angel17jc/Lingo/pull/14) publicado hacia develop; consultar allí el resultado actual de quality. Pendiente revisión e integración del avance; el issue #13 permanece abierto. La fase 4 no está completada ni se ha iniciado la fase 5.
 
 ## 2026-11-05 — Cierre de sesión y continuidad (issue #11)
 
