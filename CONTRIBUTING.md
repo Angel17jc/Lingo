@@ -59,7 +59,7 @@ pnpm build
 
 En PowerShell se puede usar pnpm.cmd si la política local bloquea pnpm.ps1. El hook de pre-commit complementa estas verificaciones; el CI comprueba el repositorio completo en Linux.
 
-El CI usa valores de prueba para la configuración, sin claves reales ni conexiones a DeepL, Neon o Redis. Las pruebas unitarias deben sustituir los servicios externos. Los e2e llegarán en la fase 6, según la guía.
+El CI usa valores de prueba para la configuración, sin claves reales ni conexiones a DeepL, Neon o Redis. Las pruebas unitarias deben sustituir los servicios externos. Los e2e de la interfaz se adelantaron desde fase 6 para revisar la fase 3 y se ejecutan en local.
 
 Se adelanta este CI desde la fase 6 para que el flujo de PRs tenga verificaciones desde el inicio. Las fases funcionales mantienen su orden.
 
@@ -83,11 +83,8 @@ No usar squash en develop → main: conservar los commits de integración evita 
 
 ## Próximo avance del plan
 
-La fase 2 se dividirá en PRs pequeños:
+Las fases 1 y 2 están integradas en develop. La fase 3 incorpora la interfaz completa y queda pendiente de revisión e integración. Se adelantaron sus comprobaciones de navegador desde la fase 6 para verificar los flujos, la accesibilidad y el diseño responsive.
 
-1. Contratos compartidos: esquemas Zod, errores de dominio y pruebas.
-2. Interfaz del proveedor y adaptador DeepL, con sus pruebas.
-3. Servicio con dependencias inyectadas y endpoint /api/translate, con pruebas.
-4. Revisión del checklist de la fase 2 antes de iniciar la interfaz.
+Cada avance mantiene commits pequeños y un PR asociado a su issue. Tras aprobar la interfaz, la fase 4 incorporará la caché de Neon mediante PRs separados.
 
 Cada PR incluye pruebas apropiadas para su comportamiento. Las credenciales reales se configuran únicamente en .env.local y, más adelante, en Vercel.

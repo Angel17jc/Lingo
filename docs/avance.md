@@ -1,5 +1,22 @@
 # Registro de avances
 
+## 2026-11-05 — Fase 3: interfaz y experiencia (issue #9)
+
+- Fase 2 integrada mediante PR #8 en develop: 2cd0fe0. Issue #7 cerrado y traducción real verificada antes de comenzar esta fase.
+- Rama de trabajo: feat/9-interfaz-traductor.
+- Interfaz editorial en marfil y verde, con dos paneles en escritorio y disposición vertical en móvil. Tipografías del sistema, sin descargas externas ni librerías de componentes.
+- TranslatorForm, LanguageSelect y OutputBox conectados a la API. Textos centralizados en lib/messages.ts y límite compartido con el esquema Zod.
+- Autodetección, intercambio de variantes regionales, copia con alternativa manual, borrado, ejemplos que no envían peticiones y contador de 3000 caracteres.
+- useTranslate valida, cancela solicitudes anteriores y descarta respuestas desactualizadas. Editar texto o idiomas limpia el resultado anterior.
+- Mensajes específicos para cuota, red y errores del proveedor; 429 con cuenta atrás que no se reinicia al editar.
+- Tema inicial según el sistema, control manual persistido y respeto a prefers-reduced-motion. No se guarda texto del usuario en almacenamiento local.
+- Etiquetas, salto al formulario con foco, Ctrl/Cmd+Enter, salida de solo lectura, aria-live, idioma de lectura del resultado y texto plano sin HTML inyectado.
+- 160 pruebas unitarias y 9 escenarios de Chromium correctos. Verificados teclado, portapapeles, errores, cancelación, variantes y límite de salida.
+- Capturas revisadas en escritorio, móvil y oscuro. Sin desborde tras recalcular el layout en 320/390/768 px; contraste de colores de texto >= 4.5:1 en ambos temas. No sustituye una auditoría completa con lectores de pantalla o dispositivos físicos.
+- Tipos, lint sin advertencias, formato y build correctos. Sin dependencias nuevas.
+- Playwright se adelanta desde fase 6 para revisar esta UI. Sus pruebas usan respuestas simuladas y servidor Azure stub; no consumen cuota real. Los e2e se ejecutan en local, no en CI.
+- Capturas de revisión en docs/images. Pendiente revisar el PR e integrar a develop.
+
 ## 2026-11-05 — Prueba real de DeepL (issue #7)
 
 - Clave local aceptada por DeepL, sin mostrarla ni incluirla en Git.
@@ -33,7 +50,7 @@
 - [x] Clave rechazada devuelve 502 sin detalles internos (DeepL 403 simulado).
 - [x] pnpm test pasa: 141 pruebas.
 - [x] Traducción real verificada con DeepL y credenciales locales, con origen explícito y autodetección.
-- [ ] Revisar e integrar el PR del servicio y la API antes de cerrar la fase.
+- [x] PR #8 revisado e integrado a develop con autorización del usuario.
 
 ## 2026-11-05 — Fase 2, avance 2: proveedores (issue #5)
 
@@ -147,13 +164,13 @@
 
 ## Siguiente avance
 
-Revisar e integrar el PR #8 del issue #7; la traducción real ya está verificada. Cerrar la fase 2 tras esa revisión antes de comenzar la fase 3 (interfaz).
+Revisar la interfaz de la fase 3 e integrar su PR a develop. Después, comenzar fase 4: esquema Drizzle y caché con Neon, en issues y PRs pequeños.
 
 ## Fases
 
 - [ ] 0: completar cuentas y credenciales externas cuando correspondan.
 - [x] 1: base técnica implementada, revisada y verificada con valores temporales.
-- [ ] 2: motor de traducción.
+- [x] 2: motor de traducción integrado y prueba real aprobada.
 - [ ] 3: interfaz.
 - [ ] 4: caché con Neon.
 - [ ] 5: protección y cuotas.
