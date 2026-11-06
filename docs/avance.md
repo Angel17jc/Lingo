@@ -1,5 +1,29 @@
 # Registro de avances
 
+## 2026-11-05 — Fase 2, avance 3: servicio y API (issue #7)
+
+- PR #6 autorizado y fusionado con squash a develop: 52e6abc. Issue #5 cerrado.
+- Rama creada desde develop: feat/7-servicio-api-traduccion.
+- createTranslationService recibe TranslationProvider por interfaz y devuelve translation, detectedSource y cached: false.
+- Contrato TranslationCache definido con get/set y entrada tipada. Se acepta como dependencia opcional, sin consultar ni escribir caché hasta la fase 4.
+- Composición del proveedor en services/index.ts, separada de la lógica del servicio y del controlador.
+- POST /api/translate en runtime Node.js: JSON → validación Zod → servicio → respuesta JSON.
+- JSON mal formado o entrada inválida devuelve 400 antes de crear el servicio. No hay acceso directo a proveedores ni base de datos desde la ruta.
+- Errores con forma { error: { code, message, retryAfterSeconds? } }; 400/429/502/503 para errores de dominio y 500 genérico para inesperados.
+- RateLimitError añade Retry-After; solo se registra un evento técnico con el status en errores 5xx. Todas las respuestas POST llevan Cache-Control: no-store.
+- Verificación local: 141 pruebas en 9 archivos, tipos, formato, lint sin advertencias y build correctos. Incluye integración de todas las capas con DeepL simulado.
+- Prueba HTTP del build de producción con Azure como stub: GET 405, JSON inválido 400, texto vacío 400 y solicitud válida 502 segura. Servidor de prueba cerrado al terminar; no se consumió cuota real.
+- Sin dependencias nuevas. La página permanece provisional y la API todavía no tiene caché ni limitación de peticiones, previstas en las fases 4 y 5.
+- El CI remoto se comprueba en el PR hacia develop. El avance queda pendiente de revisión e integración.
+
+### Checklist de fase 2
+
+- [x] Texto vacío devuelve 400 (prueba unitaria y HTTP local).
+- [x] Clave rechazada devuelve 502 sin detalles internos (DeepL 403 simulado).
+- [x] pnpm test pasa: 141 pruebas.
+- [ ] Validar traducción real con DeepL y credenciales locales; no existe .env.local.
+- [ ] Revisar e integrar el PR del servicio y la API antes de cerrar la fase.
+
 ## 2026-11-05 — Fase 2, avance 2: proveedores (issue #5)
 
 - PR #4 autorizado por el usuario y fusionado con squash a develop: c79e9af. Issue #3 cerrado.
@@ -112,7 +136,7 @@
 
 ## Siguiente avance
 
-Tras revisar e integrar el avance del issue #5, continuar la fase 2 con el servicio de traducción, el puerto de caché y el endpoint POST /api/translate con sus pruebas.
+Revisar e integrar el avance del issue #7 y validar una traducción real con DeepL usando credenciales configuradas localmente. Completar el checklist de la fase 2 antes de comenzar la fase 3 (interfaz).
 
 ## Fases
 
