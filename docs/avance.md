@@ -1,5 +1,21 @@
 # Registro de avances
 
+## 2026-11-05 — Flujo de colaboración (issue #1)
+
+- La fase 1 ya está publicada en origin/main hasta 1fc6c33.
+- develop creada y publicada desde main, sin cambios de la aplicación.
+- Rama de tarea: chore/1-flujo-colaborativo.
+- Issue: https://github.com/Angel17jc/Lingo/issues/1.
+- Procedimiento documentado en CONTRIBUTING.md y resumido en AGENTS.md y README.md.
+- Plantillas de tareas, errores y PRs preparadas. Los formularios de issues aparecerán en GitHub cuando lleguen a main, la rama predeterminada.
+- CI básico adelantado desde la fase 6: formato, lint, tipos, pruebas y build en Linux con Node 24 y pnpm fijado por package.json. Acciones oficiales fijadas por SHA.
+- GitHub confirmó las protecciones de main y develop: PR obligatorio, quality con base actualizada, conversaciones resueltas, reglas aplicadas a administradores, sin force-push ni borrado.
+- Con un solo colaborador se requieren cero aprobaciones de otra cuenta; la revisión del usuario se mantiene antes de autorizar una fusión.
+- Squash disponible para ramas de tarea; merge commit para entregas develop → main. Rebase y borrado automático de ramas deshabilitados para conservar las ramas permanentes.
+- Verificación local del cambio: formato, lint sin advertencias, tipos, 14 pruebas y build correctos con valores temporales.
+- El resultado remoto de quality se verifica en el PR antes de su revisión.
+- La fase 2 se mantiene como siguiente avance, empezando por contratos y errores de dominio. Esta configuración del flujo no implementa el motor.
+
 ## 2026-11-05 — Revisión de la fase 1
 
 - Los commits iniciales de la fase 1 ya existían: b867b03 (base) y a7d26fc (documentación).

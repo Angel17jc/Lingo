@@ -1,0 +1,43 @@
+name: Tarea
+description: Un avance pequeño del plan de Lingo.
+title: "feat: "
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Objetivo
+      description: Qué problema resuelve y cuál es el resultado esperado.
+    validations:
+      required: true
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Fase
+      options:
+        - Flujo de trabajo y mantenimiento
+        - "1 - Base"
+        - "2 - Motor"
+        - "3 - Interfaz"
+        - "4 - Caché"
+        - "5 - Protección"
+        - "6 - Calidad y despliegue"
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Alcance
+      description: Archivos o comportamiento que comprende este avance.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criterios de aceptación
+      value: |
+        - [ ] Comportamiento implementado y verificado.
+        - [ ] CI correcto.
+        - [ ] Registro de avances actualizado.
+        - [ ] PR revisado e integrado a develop.
+    validations:
+      required: true
