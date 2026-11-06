@@ -14,4 +14,4 @@ Lee CONTRIBUTING.md antes de implementar cambios. Cada avance parte de un issue 
 
 ## Continuidad entre sesiones
 
-Antes de retomar trabajo, lee docs/continuidad.md y docs/avance.md. El usuario cerró la sesión tras aprobar e integrar la fase 3; la fase 4 no ha comenzado. Verifica el estado de los PRs de cierre y las ramas antes de repetir acciones. No sobrescribas .env.local ni muestres sus valores. El siguiente trabajo funcional se inicia cuando el usuario indique continuar.
+Antes de retomar trabajo, lee docs/continuidad.md y docs/avance.md. Las fases 1–3 y el cierre documental (PR #12) están integrados. La fase 4 comenzó con el issue #13: esquema, migración y hash; su integración y la caché funcional deben confirmarse en GitHub. Verifica los PRs y las ramas antes de repetir acciones. No sobrescribas .env.local ni muestres sus valores. Mantén la revisión del usuario antes de cada fusión.

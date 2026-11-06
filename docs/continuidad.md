@@ -1,6 +1,6 @@
 # Continuidad de Lingo
 
-Corte de sesión: **2026-11-05**, zona America/Guayaquil. El usuario pidió detener el trabajo después de completar y aprobar la fase 3.
+Actualizado: **2026-11-06**, zona America/Guayaquil. Se retomó el trabajo tras el cierre de la fase 3 y se inició el primer avance acotado de fase 4.
 
 ## Leer primero
 
@@ -17,25 +17,25 @@ El estado resumido aquí prevalece sobre anotaciones históricas del registro qu
 - Repositorio: https://github.com/Angel17jc/Lingo
 - Workspace compartido: C:\Traductor, Windows/PowerShell.
 - Último commit funcional integrado: **32ab8aa**, PR [#10](https://github.com/Angel17jc/Lingo/pull/10).
+- Último commit integrado en develop confirmado al retomar: **0c3a8fc**, cierre documental [#12](https://github.com/Angel17jc/Lingo/pull/12), con quality aprobado.
 - **Fases 1, 2 y 3 completadas, revisadas por el usuario e integradas en develop.**
 - El usuario revisó la UI y la aprobó expresamente. Conservar su diseño al trabajar en las fases siguientes.
-- **La fase 4 (caché con Neon) no ha comenzado.**
+- **Fase 4 iniciada en el [issue #13](https://github.com/Angel17jc/Lingo/issues/13)**, rama **feat/13-base-cache-traducciones** desde develop actualizado: esquema, migración y hash. PR [#14](https://github.com/Angel17jc/Lingo/pull/14) hacia develop, pendiente de revisión e integración. El adaptador y la conexión a Neon corresponden al siguiente avance.
 - main sigue en **1fc6c33**, la base inicial. No contiene todavía el motor ni la UI integrada en develop.
 - No hay despliegue en Vercel ni una URL pública de producción. main está reservada para producción, pero no se ha hecho la entrega develop → main.
-- Antes de este cierre no había issues ni PRs funcionales abiertos.
-- Este cierre se documenta en el [issue #11](https://github.com/Angel17jc/Lingo/issues/11), rama **chore/11-cierre-sesion**, mediante un PR hacia develop. Si ese PR sigue abierto al retomar, revisar su estado primero; no darlo por fusionado.
+- El [issue #11](https://github.com/Angel17jc/Lingo/issues/11) se cerró al retomar, tras confirmar la integración de #12. No repetir la fusión ni crear otro cierre.
 
 ## Estado por fases
 
-| Fase                   | Estado real                                                                         |
-| ---------------------- | ----------------------------------------------------------------------------------- |
-| 0 — Preparación        | Herramientas disponibles; servicios externos se configuran cuando correspondan.     |
-| 1 — Base               | Completa: Next.js, TypeScript, Tailwind, Zod, estructura, herramientas y cabeceras. |
-| 2 — Motor              | Completa: contratos, DeepL, selector, servicio y API; traducción real aprobada.     |
-| 3 — UI/UX              | Completa: formulario responsive y accesible, aprobado por el usuario y fusionado.   |
-| 4 — Caché              | Pendiente: hash, Drizzle/Neon, migración, implementación de caché y limpieza.       |
-| 5 — Protección         | Pendiente: rate limiting real, contador/cuota y límite de bytes del body.           |
-| 6 — Calidad/despliegue | Parcialmente adelantada: CI y e2e ya existen; faltan cierre de calidad y Vercel.    |
+| Fase                   | Estado real                                                                                                 |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 0 — Preparación        | Herramientas disponibles; servicios externos se configuran cuando correspondan.                             |
+| 1 — Base               | Completa: Next.js, TypeScript, Tailwind, Zod, estructura, herramientas y cabeceras.                         |
+| 2 — Motor              | Completa: contratos, DeepL, selector, servicio y API; traducción real aprobada.                             |
+| 3 — UI/UX              | Completa: formulario responsive y accesible, aprobado por el usuario y fusionado.                           |
+| 4 — Caché              | En curso: esquema, migración y hash preparados en #13; pendientes su revisión, caché funcional y Neon real. |
+| 5 — Protección         | Pendiente: rate limiting real, contador/cuota y límite de bytes del body.                                   |
+| 6 — Calidad/despliegue | Parcialmente adelantada: CI y e2e ya existen; faltan cierre de calidad y Vercel.                            |
 
 ## Historial integrado importante
 
@@ -46,8 +46,9 @@ El estado resumido aquí prevalece sobre anotaciones históricas del registro qu
 | [#6](https://github.com/Angel17jc/Lingo/pull/6)   | Proveedor DeepL y selector     | 52e6abc                  |
 | [#8](https://github.com/Angel17jc/Lingo/pull/8)   | Servicio, API y prueba real    | 2cd0fe0                  |
 | [#10](https://github.com/Angel17jc/Lingo/pull/10) | Interfaz y experiencia         | 32ab8aa                  |
+| [#12](https://github.com/Angel17jc/Lingo/pull/12) | Cierre y continuidad           | 0c3a8fc                  |
 
-Issues #1, #3, #5, #7 y #9 cerrados tras verificar sus fusiones. Las ramas antiguas siguen existiendo; son historial, no el punto de partida de nuevas tareas.
+Issues #1, #3, #5, #7, #9 y #11 cerrados tras verificar sus fusiones. Las ramas antiguas siguen existiendo; son historial, no el punto de partida de nuevas tareas.
 
 ## Flujo acordado con el usuario
 
@@ -93,26 +94,29 @@ Issues #1, #3, #5, #7 y #9 cerrados tras verificar sus fusiones. Las ramas antig
 
 ## Mapa de código
 
-| Ubicación                                                   | Responsabilidad                                                     |
-| ----------------------------------------------------------- | ------------------------------------------------------------------- |
-| src/app/page.tsx, globals.css, layout.tsx                   | Página, diseño y metadatos.                                         |
-| src/features/translator/components                          | Formulario, selectores, resultado, tema e iconos.                   |
-| src/features/translator/hooks/useTranslate.ts               | Peticiones, cancelación, estados y cuenta atrás.                    |
-| src/features/translator/schemas.ts                          | Contratos Zod y MAX_TRANSLATION_CHARACTERS.                         |
-| src/features/translator/client-errors.ts, language-utils.ts | Mensajes seguros y conversiones de idioma.                          |
-| src/lib/messages.ts, languages.ts                           | Textos de UI y catálogo único.                                      |
-| src/lib/env.ts, logger.ts                                   | Configuración solo de servidor y logs técnicos limitados.           |
-| src/server/providers                                        | Interfaz, DeepL, Azure stub y selector por entorno.                 |
-| src/server/services/translation.service.ts                  | Lógica con proveedor inyectado.                                     |
-| src/server/services/index.ts                                | Composición de la implementación, fuera del controlador.            |
-| src/server/services/translation-cache.ts                    | **Puerto tipado get/set reservado**, sin implementación ni uso aún. |
-| src/server/http/translation-error-response.ts               | Respuestas HTTP de error seguras.                                   |
-| src/app/api/translate/route.ts                              | Controlador delgado; no importa proveedores ni DB directamente.     |
-| src/tests                                                   | 160 pruebas unitarias/de integración simulada en 10 archivos.       |
-| e2e/translator.spec.ts, playwright.config.ts                | 9 escenarios de Chromium.                                           |
-| .github/workflows/ci.yml                                    | Check quality en PRs y pushes a develop/main.                       |
+| Ubicación                                                   | Responsabilidad                                                        |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------- |
+| src/app/page.tsx, globals.css, layout.tsx                   | Página, diseño y metadatos.                                            |
+| src/features/translator/components                          | Formulario, selectores, resultado, tema e iconos.                      |
+| src/features/translator/hooks/useTranslate.ts               | Peticiones, cancelación, estados y cuenta atrás.                       |
+| src/features/translator/schemas.ts                          | Contratos Zod y MAX_TRANSLATION_CHARACTERS.                            |
+| src/features/translator/client-errors.ts, language-utils.ts | Mensajes seguros y conversiones de idioma.                             |
+| src/lib/messages.ts, languages.ts                           | Textos de UI y catálogo único.                                         |
+| src/lib/env.ts, logger.ts                                   | Configuración solo de servidor y logs técnicos limitados.              |
+| src/lib/hash.ts                                             | SHA-256 de texto normalizado, origen y destino; preparado en #13.      |
+| src/server/db/schema.ts, migrations                         | Esquema y SQL generado; todavía sin aplicar a Neon.                    |
+| drizzle.config.ts, drizzle.migrate.config.ts                | Generación sin credenciales y aplicación con entorno local.            |
+| src/server/providers                                        | Interfaz, DeepL, Azure stub y selector por entorno.                    |
+| src/server/services/translation.service.ts                  | Lógica con proveedor inyectado.                                        |
+| src/server/services/index.ts                                | Composición de la implementación, fuera del controlador.               |
+| src/server/services/translation-cache.ts                    | **Puerto tipado get/set reservado**, sin implementación ni uso aún.    |
+| src/server/http/translation-error-response.ts               | Respuestas HTTP de error seguras.                                      |
+| src/app/api/translate/route.ts                              | Controlador delgado; no importa proveedores ni DB directamente.        |
+| src/tests                                                   | 182 pruebas en 12 archivos; incluye 22 nuevas de hash y configuración. |
+| e2e/translator.spec.ts, playwright.config.ts                | 9 escenarios de Chromium.                                              |
+| .github/workflows/ci.yml                                    | Check quality; añade comprobación de migraciones sin conexión en #13.  |
 
-Drizzle, Neon y Upstash ya están instalados. Aún no existen esquema real de DB, cliente Neon, migración generada, hash ni implementación de caché. Los scripts db:generate y db:migrate de la guía **no se han añadido** a package.json.
+Drizzle, Neon y Upstash ya están instalados. El issue #13 prepara esquema, migración SQL con metadatos y hash; añade db:generate, db:check y db:migrate. Generar SQL no necesita credenciales. El cliente Neon, la implementación de caché y la limpieza siguen pendientes. Procedimiento y alcance en [cache-neon.md](cache-neon.md).
 
 ## Configuración local y secretos
 
@@ -137,16 +141,17 @@ Drizzle, Neon y Upstash ya están instalados. Aún no existen esquema real de DB
 - Husky/lint-staged verifican los archivos preparados; no sustituyen al CI.
 - Para APIs/convenios de esta versión de Next.js, consultar node_modules/next/dist/docs antes de escribir código.
 
-Últimos resultados funcionales verificados:
+Últimos resultados verificados:
 
-- **160 pruebas unitarias, 9 escenarios de Chromium, tipos, lint, formato y build correctos.**
+- **Issue #13: 182 pruebas unitarias, tipos, lint, formato, generación/comprobación de migraciones y build correctos.** Build con variables temporales y sin servicios externos. El estado actual del CI se consulta en el [PR #14](https://github.com/Angel17jc/Lingo/pull/14).
+- Última verificación de UI (fase 3): **9 escenarios de Chromium correctos**.
 - CI del commit integrado 32ab8aa: https://github.com/Angel17jc/Lingo/actions/runs/42153255959, aprobado.
 - E2e: teclado, copia/fallback, intercambio, límites, cancelación, respuestas antiguas, errores, cuenta atrás, tema y layout.
 - Layout comprobado en 320/390/768 px y escritorio; contraste de combinaciones principales >= 4.5:1 en ambos temas.
 - El test de resize espera el recálculo de layout; no volver a introducir una lectura inmediata que produzca falsos desbordes transitorios.
 - Esto no equivale a una auditoría completa con lector de pantalla o dispositivos físicos.
 - Se comprobó que la clave local no estaba en los 11 archivos JS del cliente del build inspeccionado.
-- El CI ejecuta formato, lint, tipos, unitarios y build. **Los e2e se ejecutan en local.**
+- El CI ejecuta formato, lint, tipos, unitarios y build; en #13 se añade db:check sin conexión. **Los e2e se ejecutan en local.**
 - Playwright usa el build de producción en **127.0.0.1:3100**, API interceptada y Azure como stub de respaldo con valores de prueba, sin gastar cuota.
 - La vista manual usa normalmente **127.0.0.1:3000**. Un servidor temporal no es un despliegue persistente; comprobar si sigue activo o arrancarlo de nuevo.
 
@@ -176,20 +181,20 @@ pnpm.cmd e2e
 
 En un equipo sin Chromium instalado: pnpm.cmd exec playwright install chromium.
 
-## Siguiente fase, cuando el usuario pida continuar
+## Continuación de fase 4
 
 **Fase 4: caché con Neon**, siguiendo la guía y usando nuevos issues/ramas/PRs pequeños.
 
-Orden sugerido:
+Estado y orden de continuación:
 
-1. Comprobar primero el PR de documentación de este cierre y el estado remoto. Si sigue pendiente, conservarlo y solicitar revisión antes de fusionar.
-2. Crear el primer issue acotado de fase 4 y una rama desde develop actualizado. No rehacer la base, el motor ni la UI.
-3. Preparar esquema Drizzle, configuración y SQL de migración; implementar hash con pruebas. Usar el puerto TranslationCache que ya existe, en vez de inventar otro incompatible.
-4. Implementar caché e integración del servicio con pruebas de hit, miss y caída. Límite de texto cacheado y limpieza según la guía; si Neon falla, la traducción debe continuar con un warning seguro.
-5. Configurar la conexión pooled real de Neon localmente y aplicar la migración solo después de revisar el SQL y el destino. Verificar tabla y segunda traducción con cached true.
-6. No iniciar fase 5 ni alterar la UI aprobada como parte de la caché.
+1. Cierre #12 confirmado como integrado y issue #11 cerrado. Primer avance de fase 4 preparado en #13 y feat/13-base-cache-traducciones; verificar su PR en GitHub antes de repetir trabajo.
+2. El usuario revisa y autoriza la fusión del primer avance. Integrar con squash en develop y cerrar #13 solo después de comprobar la integración.
+3. Crear otro issue y rama desde develop actualizado para el cliente Neon, el adaptador y la integración del servicio. Usar el puerto TranslationCache existente y conservar el idioma solicitado separado del detectado.
+4. Implementar pruebas de hit, miss y caída. Límite de 1000 caracteres y limpieza tras 90 días sin uso según la guía; si Neon falla, la traducción debe continuar con un warning seguro.
+5. Configurar la conexión pooled real de Neon localmente y aplicar la migración solo después de revisar el SQL y el destino, siguiendo cache-neon.md. Verificar tabla y segunda traducción con cached true.
+6. Mantener la fase 5 y el diseño de la UI fuera de este alcance.
 
-No se ha creado todavía un issue funcional de fase 4 ni hay una conexión real de Neon configurada para esta aplicación.
+El issue #13 sigue abierto hasta su integración. La última configuración conocida de DATABASE_URL es de prueba; no se ha aplicado la migración ni verificado una conexión real a Neon.
 
 ## Pendientes y decisiones que no hay que perder
 
@@ -206,8 +211,8 @@ No se ha creado todavía un issue funcional de fase 4 ni hay una conexión real 
 ```text
 Retomemos Lingo en C:\Traductor. Lee AGENTS.md, docs/continuidad.md,
 CONTRIBUTING.md y docs/avance.md antes de actuar. Las fases 1–3 están
-integradas en develop y la UI ya fue aprobada. Comprueba el PR de
-documentación de cierre; después continuaremos con la fase 4, caché
-con Neon, mediante issues, ramas y PRs pequeños. No muestres secretos,
+integradas en develop y la UI ya fue aprobada. El cierre #12 está
+integrado. Comprueba el PR del issue #13 (esquema, migración y hash)
+antes de continuar con el adaptador y la conexión a Neon. No muestres secretos,
 no rehagas lo completado y no fusiones PRs sin mi autorización.
 ```
