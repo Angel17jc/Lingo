@@ -11,3 +11,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Flujo del repositorio
 
 Lee CONTRIBUTING.md antes de implementar cambios. Cada avance parte de un issue y una rama de tarea creada desde develop. Abre PRs hacia develop; las entregas a main proceden de develop. No hagas commits ni pushes directos a main o develop. Conserva main como rama de producción y develop como integración. El usuario revisa el resultado antes de autorizar una fusión. Actualiza docs/avance.md y ejecuta las verificaciones correspondientes a cada cambio.
+
+## Continuidad entre sesiones
+
+Antes de retomar trabajo, lee docs/continuidad.md y docs/avance.md. El usuario cerró la sesión tras aprobar e integrar la fase 3; la fase 4 no ha comenzado. Verifica el estado de los PRs de cierre y las ramas antes de repetir acciones. No sobrescribas .env.local ni muestres sus valores. El siguiente trabajo funcional se inicia cuando el usuario indique continuar.

@@ -6,7 +6,7 @@ Repositorio: https://github.com/Angel17jc/Lingo
 
 ## Estado
 
-Fases 1 y 2 completadas e integradas en develop. Fase 3: interfaz del traductor lista para revisión, con modo claro/oscuro, controles accesibles y diseño responsive. Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
+Fases 1, 2 y 3 completadas, aprobadas e integradas en develop. La fase 4 (caché con Neon) aún no ha comenzado. Para retomar en otra sesión, empieza por el [documento de continuidad](docs/continuidad.md). Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
 
 ## Instalación local
 
@@ -15,7 +15,7 @@ Requisitos: Node.js 22.13 o superior (se verificó con Node 24) y pnpm. La versi
 ```powershell
 npm install --global pnpm
 pnpm install --frozen-lockfile
-Copy-Item .env.example .env.local
+if (!(Test-Path .env.local)) { Copy-Item .env.example .env.local }
 ```
 
 Completa .env.local con tus credenciales antes de arrancar. No las pegues en el chat ni las subas al repositorio.
