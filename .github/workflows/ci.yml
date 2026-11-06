@@ -57,6 +57,8 @@ jobs:
         run: pnpm lint --max-warnings 0
       - name: Comprobar tipos
         run: pnpm typecheck
+      - name: Comprobar historial de migraciones
+        run: pnpm db:check
       - name: Ejecutar pruebas unitarias
         run: pnpm test
       - name: Compilar producción
