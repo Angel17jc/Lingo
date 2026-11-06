@@ -1,5 +1,20 @@
 # Registro de avances
 
+## 2026-11-06 — Fase 4, avance 1: esquema y hash (issue #13)
+
+- Continuidad, avance, CONTRIBUTING y guía original leídos antes de implementar. Documentación local de Next.js consultada para entorno y límites de servidor.
+- PR #12 confirmado como integrado en develop: 0c3a8fc, quality aprobado. Issue #11 actualizado y cerrado tras verificar su integración.
+- Issue #13 y rama feat/13-base-cache-traducciones creados desde develop actualizado. main sigue en 1fc6c33.
+- Esquema Drizzle translation_cache con UUID, hash único, origen solicitado nullable, idioma detectado independiente, destino, textos, proveedor, hits y fechas con zona horaria. Índice de last_used_at para limpieza futura.
+- Migración 0000_translation_cache.sql generada junto con snapshot e historial de Drizzle. SQL limitado a crear la tabla y dos índices; pendiente de aplicar a Neon.
+- createTranslationHash usa SHA-256 y tupla JSON versionada de texto normalizado, origen y destino. Recorta extremos y colapsa espacios según la guía, preservando mayúsculas, acentos y puntuación.
+- db:generate y db:check funcionan con configuración sin credenciales. db:migrate usa otra configuración que carga .env.local sin sobrescribir variables del proceso y valida DATABASE_URL con mensaje seguro.
+- Verificación local: 182 pruebas en 12 archivos (22 nuevas), tipos, lint sin advertencias, formato y build de producción correctos. Build con variables temporales de prueba, sin consumir servicios externos.
+- db:generate repetido sin cambios y db:check correcto. Se añade db:check al check quality del CI para comprobar el historial sin conexión. Los 9 e2e de la UI mantienen su última verificación de fase 3.
+- Guía de SQL y migración en docs/cache-neon.md; continuidad, instrucciones y README actualizados.
+- El cliente Neon, el adaptador, la integración de servicio y la limpieza corresponden al siguiente PR. cached sigue siendo false. La UI aprobada y .env.local se conservan.
+- Pendiente revisión e integración del avance; el issue #13 permanece abierto. La fase 4 no está completada ni se ha iniciado la fase 5.
+
 ## 2026-11-05 — Cierre de sesión y continuidad (issue #11)
 
 - El usuario revisó y aprobó la UI. PR #10 fusionado a develop: 32ab8aa; issue #9 cerrado.
@@ -175,7 +190,7 @@
 
 ## Siguiente avance
 
-Leer docs/continuidad.md y comprobar el PR de documentación de cierre. Las fases 1–3 ya están integradas; cuando el usuario pida retomar, comenzar la fase 4 (caché con Neon) mediante un nuevo issue y rama desde develop.
+Leer docs/continuidad.md y comprobar el PR asociado al issue #13. Las fases 1–3 y el cierre #12 ya están integrados. Revisar e integrar el primer avance de fase 4 antes de crear el siguiente issue y rama para cliente Neon, adaptador, servicio y limpieza. La migración real espera la configuración local de Neon y la revisión de SQL/destino.
 
 ## Fases
 

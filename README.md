@@ -6,7 +6,7 @@ Repositorio: https://github.com/Angel17jc/Lingo
 
 ## Estado
 
-Fases 1, 2 y 3 completadas, aprobadas e integradas en develop. La fase 4 (caché con Neon) aún no ha comenzado. Para retomar en otra sesión, empieza por el [documento de continuidad](docs/continuidad.md). Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
+Fases 1, 2 y 3 completadas, aprobadas e integradas en develop. Fase 4 iniciada: esquema Drizzle, migración SQL y hash preparados en el issue #13, pendientes de revisión e integración. La caché funcional es el siguiente avance. Para retomar en otra sesión, empieza por el [documento de continuidad](docs/continuidad.md). Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
 
 ## Instalación local
 
@@ -38,6 +38,8 @@ pnpm typecheck
 pnpm lint
 pnpm format:check
 pnpm test
+pnpm db:generate
+pnpm db:check
 pnpm build
 pnpm start
 ```
@@ -54,7 +56,7 @@ Vitest está configurado con entorno Node y alias @. Ejecuta pnpm test para las 
 - src/lib: configuración de servidor, catálogo de idiomas y logger.
 - src/tests: pruebas unitarias de configuración y contratos de traducción.
 
-La presentación dependerá de los servicios; los servicios dependerán de interfaces para permitir cambiar de proveedor. El adaptador DeepL está conectado al servicio y a la API. La ruta depende del servicio; la lógica del servicio usa interfaces y su composición está separada. El formulario envía el texto a la API únicamente al pulsar Traducir o Ctrl/Cmd+Enter. El contrato de caché está reservado para la fase 4 y aún no hay conexiones a Neon o Redis.
+La presentación dependerá de los servicios; los servicios dependerán de interfaces para permitir cambiar de proveedor. El adaptador DeepL está conectado al servicio y a la API. La ruta depende del servicio; la lógica del servicio usa interfaces y su composición está separada. El formulario envía el texto a la API únicamente al pulsar Traducir o Ctrl/Cmd+Enter. El puerto de caché ya existe y su implementación será el siguiente avance. El esquema y la migración están preparados; la conexión a Neon sigue pendiente. Consulta [caché con Neon](docs/cache-neon.md) para revisar el SQL y los comandos de migración.
 
 El logger solo admite eventos conocidos y campos técnicos explícitos. No recibe texto de traducciones, claves ni objetos de error.
 
