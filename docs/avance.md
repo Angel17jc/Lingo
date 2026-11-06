@@ -1,5 +1,25 @@
 # Registro de avances
 
+## 2026-11-05 — Fase 2, avance 2: proveedores (issue #5)
+
+- PR #4 autorizado por el usuario y fusionado con squash a develop: c79e9af. Issue #3 cerrado.
+- Rama creada desde develop: feat/5-proveedor-deepl.
+- Interfaz TranslationProvider con TranslationInput y TranslationResult tipados a partir del catálogo de idiomas.
+- Adaptador DeepL API Free con fetch inyectable para pruebas. La clave se envía solo en Authorization, sin caché de Next.js ni redirecciones.
+- Timeout de 8 segundos con AbortController por intento, cubriendo cabeceras y lectura del cuerpo. Máximo dos intentos, con espera de 300 ms ante errores de red o HTTP 5xx.
+- Respuesta externa validada con Zod: exactamente una traducción con texto e idioma detectado. Se toleran campos adicionales del proveedor.
+- Errores seguros: 429/456 → QuotaExceededError según la guía; otros errores definitivos o intentos agotados → ProviderError. No se incluyen cuerpos de error, claves ni texto del usuario.
+- getProvider selecciona por TRANSLATION_PROVIDER; AzureProvider es un stub que falla de forma controlada sin acceder a la red.
+- Verificación local: 111 pruebas en 5 archivos, tipos, formato, lint sin advertencias y build correctos. Pruebas con fetch y tiempo simulados; no se añadieron dependencias ni consumió cuota real.
+- El CI remoto se comprobará en el PR hacia develop. Pendiente revisión e integración del avance.
+- Próximo paso: servicio con inyección de dependencias y endpoint POST /api/translate. La página provisional aún no envía traducciones.
+
+### Referencias y decisión de compatibilidad
+
+- [Contrato de traducción de DeepL](https://developers.deepl.com/api-reference/translate/request-translation).
+- [Manejo de errores de DeepL](https://developers.deepl.com/docs/best-practices/error-handling).
+- La documentación actual recomienda reintentar HTTP 429. La guía de Lingo pide agrupar 429 y 456 como cuota agotada; se conserva ese contrato explícito en este avance. Se podrá revisar esta decisión en un issue posterior.
+
 ## 2026-11-05 — Fase 2, avance 1: contratos (issue #3)
 
 - PR #2 autorizado por el usuario y fusionado con squash a develop: 28d9f70.
@@ -92,7 +112,7 @@
 
 ## Siguiente avance
 
-Tras revisar e integrar el avance del issue #3, continuar la fase 2 con la interfaz del proveedor y el adaptador DeepL. Después se implementarán el servicio y el endpoint con sus pruebas.
+Tras revisar e integrar el avance del issue #5, continuar la fase 2 con el servicio de traducción, el puerto de caché y el endpoint POST /api/translate con sus pruebas.
 
 ## Fases
 
