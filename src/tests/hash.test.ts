@@ -59,6 +59,18 @@ describe("hash de traducción", () => {
     );
   });
 
+  it("separa proveedores y conserva la clave v1 sin proveedor", () => {
+    expect(createTranslationHash(input, "deepl")).not.toBe(
+      createTranslationHash(input, "azure"),
+    );
+    expect(createTranslationHash(input, "deepl")).not.toBe(
+      createTranslationHash(input),
+    );
+    expect(createTranslationHash(input, "deepl")).toBe(
+      createTranslationHash({ ...input, text: " Hola   mundo " }, "deepl"),
+    );
+  });
+
   it("acepta Unicode y campos con delimitadores sin alterar la entrada", () => {
     const unicodeInput = {
       text: 'こんにちは 🌎 | ES | EN-US ["v1", null]',
