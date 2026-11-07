@@ -5,7 +5,12 @@ vi.mock("server-only", () => ({}));
 vi.mock("@/lib/env", () => ({
   env: { TRANSLATION_PROVIDER: "deepl", DEEPL_API_KEY: "test-private-key" },
 }));
-vi.mock("@/lib/logger", () => ({ logger: { error: vi.fn() } }));
+vi.mock("@/lib/logger", () => ({ logger: { error: vi.fn(), warn: vi.fn() } }));
+
+const cache = vi.hoisted(() => ({ get: vi.fn(), set: vi.fn() }));
+vi.mock("@/server/cache/translation-cache", () => ({
+  createTranslationCache: () => cache,
+}));
 
 let fetcher: ReturnType<typeof vi.fn<typeof fetch>>;
 
@@ -18,6 +23,8 @@ function request() {
 }
 
 beforeEach(() => {
+  cache.get.mockReset().mockResolvedValue(null);
+  cache.set.mockReset().mockResolvedValue(undefined);
   fetcher = vi.fn<typeof fetch>();
   vi.stubGlobal("fetch", fetcher);
 });
@@ -25,6 +32,36 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("API → servicio → DeepL simulado", () => {
+  it("un acierto de caché responde 200 sin invocar DeepL", async () => {
+    cache.get.mockResolvedValue({
+      translation: "Hello world",
+      detectedSource: "ES",
+      provider: "deepl",
+    });
+    const response = await POST(request());
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Cache-Control")).toBe("no-store");
+    expect(await response.json()).toEqual({
+      translation: "Hello world",
+      detectedSource: "ES",
+      cached: true,
+    });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it("una caída de caché permite continuar con DeepL", async () => {
+    cache.get.mockRejectedValue(new Error("private database details"));
+    fetcher.mockResolvedValueOnce(
+      Response.json({
+        translations: [{ text: "Hello world", detected_source_language: "ES" }],
+      }),
+    );
+    const response = await POST(request());
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ cached: false });
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(cache.set).not.toHaveBeenCalled();
+  });
   it("conecta las capas y convierte el contrato externo al público", async () => {
     fetcher.mockResolvedValueOnce(
       Response.json({
