@@ -12,7 +12,7 @@
 - Nueve escenarios de Chromium correctos y comando terminado con exit 0. En Windows fue necesario cerrar manualmente el servidor temporal de Playwright verificado en 127.0.0.1:3100 con taskkill; no quedaron peticiones reales ni se consumió cuota. Comando de limpieza probado en consulta y aplicación con fetch simulado, sin borrar datos reales.
 - Instrucciones de Neon actualizadas en docs/cache-neon.md y facilitadas al usuario durante el trabajo. Confirmación de conexión y destino de desarrollo solicitada, pendiente de recibir antes de aplicar SQL o probar servicios reales.
 - Migración existente sin cambios; db:generate no produce SQL adicional y db:check correcto. La UI aprobada y las variables locales se conservan.
-- Pendientes: PR y CI hacia develop, configuración/prueba real de Neon y revisión del usuario. La fase 4 sigue en curso; fase 5 no iniciada.
+- PR [#16](https://github.com/Angel17jc/Lingo/pull/16) abierto en borrador hacia develop; consultar allí el estado actual de quality. Pendientes: configuración/prueba real de Neon y revisión del usuario antes de integrar. La fase 4 sigue en curso; fase 5 no iniciada.
 
 ## 2026-11-06 — Fase 4, avance 1: esquema y hash (issue #13)
 

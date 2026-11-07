@@ -19,7 +19,7 @@ El estado resumido aquí prevalece sobre anotaciones históricas del registro qu
 - Último commit integrado en develop: **43d5e65**, base de caché [#14](https://github.com/Angel17jc/Lingo/pull/14), autorizado por el usuario y con quality aprobado.
 - **Fases 1, 2 y 3 completadas, revisadas por el usuario e integradas en develop.**
 - El usuario revisó la UI y la aprobó expresamente. Conservar su diseño al trabajar en las fases siguientes.
-- **Fase 4 en curso**: esquema, migración y hash integrados mediante #14; issue #13 cerrado. El [issue #15](https://github.com/Angel17jc/Lingo/issues/15), rama **feat/15-cache-neon**, implementa cliente HTTP, adaptador, integración del servicio y limpieza. Su PR y la comprobación real con Neon deben confirmarse antes de dar la fase por completada.
+- **Fase 4 en curso**: esquema, migración y hash integrados mediante #14; issue #13 cerrado. El [issue #15](https://github.com/Angel17jc/Lingo/issues/15), rama **feat/15-cache-neon**, implementa cliente HTTP, adaptador, integración del servicio y limpieza en el [PR #16](https://github.com/Angel17jc/Lingo/pull/16), en borrador hasta comprobar Neon real. Confirmar el estado remoto antes de dar la fase por completada.
 - main sigue en **1fc6c33**, la base inicial. No contiene todavía el motor ni la UI integrada en develop.
 - No hay despliegue en Vercel ni una URL pública de producción. main está reservada para producción, pero no se ha hecho la entrega develop → main.
 - El [issue #11](https://github.com/Angel17jc/Lingo/issues/11) se cerró al retomar, tras confirmar la integración de #12. No repetir la fusión ni crear otro cierre.
