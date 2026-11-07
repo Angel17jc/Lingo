@@ -10,7 +10,7 @@ export type TranslationCacheEntry = {
   provider: string;
 };
 
-// Puerto reservado para la integración de caché en la fase 4.
+// Puerto compartido por el servicio y el adaptador Neon.
 export interface TranslationCache {
   get(hash: string): Promise<TranslationCacheEntry | null>;
   set(entry: TranslationCacheEntry): Promise<void>;

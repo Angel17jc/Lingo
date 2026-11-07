@@ -86,6 +86,6 @@ No usar squash en develop → main: conservar los commits de integración evita 
 
 Las fases 1, 2 y 3 están integradas en develop. El usuario aprobó la interfaz y el PR #10 se fusionó como 32ab8aa. Para retomar, leer primero docs/continuidad.md. Se adelantaron sus comprobaciones de navegador desde la fase 6 para verificar los flujos, la accesibilidad y el diseño responsive.
 
-Cada avance mantiene commits pequeños y un PR asociado a su issue. La fase 4 comenzó con el issue #13 (esquema, migración y hash), tras confirmar la integración del cierre documental #12. La conexión a Neon, la implementación de caché y la limpieza corresponden al siguiente PR, después de revisar e integrar esta base. Consultar [la guía de caché](docs/cache-neon.md) y confirmar siempre el estado remoto.
+Cada avance mantiene commits pequeños y un PR asociado a su issue. La base de fase 4 (esquema, migración y hash) se integró en el PR #14 (43d5e65); el issue #13 está cerrado. El issue #15 implementa cliente Neon, caché, servicio y limpieza. Consultar [la guía de caché](docs/cache-neon.md), confirmar la conexión de desarrollo antes de aplicar la migración y verificar el estado remoto del PR antes de continuar. La fase 5 empieza después de completar y revisar la fase 4.
 
 Cada PR incluye pruebas apropiadas para su comportamiento. Las credenciales reales se configuran únicamente en .env.local y, más adelante, en Vercel.

@@ -6,7 +6,7 @@ Repositorio: https://github.com/Angel17jc/Lingo
 
 ## Estado
 
-Fases 1, 2 y 3 completadas, aprobadas e integradas en develop. Fase 4 iniciada: esquema Drizzle, migración SQL y hash preparados en el issue #13, pendientes de revisión e integración. La caché funcional es el siguiente avance. Para retomar en otra sesión, empieza por el [documento de continuidad](docs/continuidad.md). Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
+Fases 1, 2 y 3 completadas, aprobadas e integradas en develop. La base de fase 4 se integró mediante PR #14 (43d5e65). El issue #15 implementa la caché con Neon, pendiente de revisión, integración y comprobación con conexión real. Para configurar Neon, sigue [esta guía](docs/cache-neon.md). Para retomar en otra sesión, empieza por el [documento de continuidad](docs/continuidad.md). Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
 
 ## Instalación local
 
@@ -28,7 +28,7 @@ Completa .env.local con tus credenciales antes de arrancar. No las pegues en el 
 | UPSTASH_REDIS_REST_URL   | URL HTTPS de Redis REST                                         |
 | UPSTASH_REDIS_REST_TOKEN | Token de Redis REST                                             |
 
-Las variables se validan con Zod en el servidor al cargar la aplicación. Se requieren todas para respetar el contrato de configuración. El endpoint contacta DeepL al recibir una solicitud válida; Neon y Redis todavía no se utilizan. Los errores de configuración solo enumeran los nombres de las variables incorrectas.
+Las variables se validan con Zod en el servidor al cargar la aplicación. Se requieren todas para respetar el contrato de configuración. El endpoint consulta Neon para entradas cacheables y contacta DeepL cuando hace falta traducir. Redis todavía no se utiliza. Los errores de configuración solo enumeran los nombres de las variables incorrectas.
 
 ## Comandos
 
@@ -40,6 +40,7 @@ pnpm format:check
 pnpm test
 pnpm db:generate
 pnpm db:check
+pnpm db:cleanup
 pnpm build
 pnpm start
 ```
@@ -56,7 +57,7 @@ Vitest está configurado con entorno Node y alias @. Ejecuta pnpm test para las 
 - src/lib: configuración de servidor, catálogo de idiomas y logger.
 - src/tests: pruebas unitarias de configuración y contratos de traducción.
 
-La presentación dependerá de los servicios; los servicios dependerán de interfaces para permitir cambiar de proveedor. El adaptador DeepL está conectado al servicio y a la API. La ruta depende del servicio; la lógica del servicio usa interfaces y su composición está separada. El formulario envía el texto a la API únicamente al pulsar Traducir o Ctrl/Cmd+Enter. El puerto de caché ya existe y su implementación será el siguiente avance. El esquema y la migración están preparados; la conexión a Neon sigue pendiente. Consulta [caché con Neon](docs/cache-neon.md) para revisar el SQL y los comandos de migración.
+La presentación depende de los servicios; los servicios dependen de interfaces para permitir cambiar de proveedor. El adaptador DeepL está conectado al servicio y a la API. La ruta depende del servicio; la lógica del servicio usa interfaces y su composición está separada. El formulario envía el texto a la API únicamente al pulsar Traducir o Ctrl/Cmd+Enter. El servicio orquesta caché → proveedor → guardar, usando el puerto TranslationCache. Consulta [caché con Neon](docs/cache-neon.md) para configurar la base, aplicar el SQL y verificar un acierto real.
 
 El logger solo admite eventos conocidos y campos técnicos explícitos. No recibe texto de traducciones, claves ni objetos de error.
 
@@ -85,11 +86,11 @@ $body = @{ text = "Hola mundo"; target = "EN-US" } | ConvertTo-Json
 Invoke-RestMethod -Uri http://localhost:3000/api/translate -Method Post -ContentType "application/json" -Body $body
 ```
 
-El origen se autodetecta al omitir source. La respuesta correcta contiene translation, detectedSource y cached: false. Opcionalmente envía source con un código de origen del catálogo.
+El origen se autodetecta al omitir source. La respuesta correcta contiene translation, detectedSource y cached. cached: true indica que se reutilizó una traducción de Neon sin llamar al proveedor. Opcionalmente envía source con un código de origen del catálogo.
 
 Los errores tienen forma { error: { code, message, retryAfterSeconds? } }. La API devuelve 400 para solicitudes inválidas, 502 para fallos del proveedor, 503 para cuota agotada y 500 para fallos inesperados. El mapeo de 429 con Retry-After está preparado para el limitador de la fase 5; todavía no limita solicitudes.
 
-Todas las respuestas POST llevan Cache-Control: no-store. La caché, la protección de cuota, el rate limiting y el límite de bytes del body se implementarán en sus fases. El límite de texto de 3000 unidades UTF-16 ya se valida con Zod.
+Todas las respuestas POST llevan Cache-Control: no-store. La caché de servidor admite entradas de hasta 1000 unidades UTF-16 y degrada ante fallos de Neon; entradas más largas se traducen sin guardarse. La protección de cuota, el rate limiting y el límite de bytes del body corresponden a fase 5. El límite de texto de 3000 unidades UTF-16 se valida con Zod.
 
 La fase 2 está integrada y su checklist técnico está verificado. No publiques claves en el chat ni en GitHub.
 
@@ -99,7 +100,7 @@ Elige el idioma de destino y escribe hasta 3000 caracteres. Puedes dejar la auto
 
 Editar el texto o cambiar los idiomas cancela la espera del cliente y limpia el resultado anterior. El intercambio reconoce EN-US/EN-GB como origen EN y PT-BR/PT-PT como origen PT; los destinos por defecto al volver a esas lenguas son EN-US y PT-BR.
 
-El tema sigue inicialmente la preferencia del sistema; el botón de la cabecera permite cambiarlo y guarda solo esa preferencia. Los textos no se guardan en localStorage. Al traducir, se envían a DeepL.
+El tema sigue inicialmente la preferencia del sistema; el botón de la cabecera permite cambiarlo y guarda solo esa preferencia. Los textos no se guardan en localStorage. La caché de servidor guarda texto y traducción de entradas de hasta 1000 unidades; si no hay un acierto, el texto se envía a DeepL.
 
 ![Interfaz de escritorio](docs/images/lingo-desktop.png)
 
