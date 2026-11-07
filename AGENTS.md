@@ -14,4 +14,4 @@ Lee CONTRIBUTING.md antes de implementar cambios. Cada avance parte de un issue 
 
 ## Continuidad entre sesiones
 
-Antes de retomar trabajo, lee docs/continuidad.md y docs/avance.md. Las fases 1–3 y el cierre documental (PR #12) están integrados. La fase 4 comenzó con el issue #13: esquema, migración y hash; su integración y la caché funcional deben confirmarse en GitHub. Verifica los PRs y las ramas antes de repetir acciones. No sobrescribas .env.local ni muestres sus valores. Mantén la revisión del usuario antes de cada fusión.
+Antes de retomar trabajo, lee docs/continuidad.md y docs/avance.md. El usuario cerró la sesión con la base de caché integrada en develop (PR #14, 43d5e65) y la implementación completa en el PR #16 en borrador (de0489d), pendiente de Neon real y revisión. El cierre documental pertenece al issue #17. Verifica sus PRs y ramas antes de repetir acciones. No sobrescribas .env.local ni muestres sus valores. El desarrollo funcional se retoma cuando el usuario indique continuar; cada fusión requiere su autorización.
