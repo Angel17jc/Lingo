@@ -6,7 +6,7 @@ Repositorio: https://github.com/Angel17jc/Lingo
 
 ## Estado
 
-Fases 1, 2 y 3 completadas, aprobadas e integradas en develop. Fase 4 iniciada: esquema Drizzle, migración SQL y hash preparados en el issue #13, pendientes de revisión e integración. La caché funcional es el siguiente avance. Para retomar en otra sesión, empieza por el [documento de continuidad](docs/continuidad.md). Consulta el [registro de avances](docs/avance.md) y la [guía original](docs/traductor-guia-completa.md).
+Sesión cerrada por indicación del usuario. Fases 1–3 integradas en develop. La base de caché se integró mediante PR #14 (43d5e65). La implementación de caché está en el [PR #16](https://github.com/Angel17jc/Lingo/pull/16), en borrador con CI aprobado, pendiente de conexión real a Neon y revisión. develop sigue respondiendo cached: false. Para retomar, empieza por el [documento de continuidad](docs/continuidad.md), que distingue las ramas y los pendientes. Consulta el [registro de avances](docs/avance.md), las [instrucciones de Neon](docs/cache-neon.md) y la [guía original](docs/traductor-guia-completa.md).
 
 ## Instalación local
 

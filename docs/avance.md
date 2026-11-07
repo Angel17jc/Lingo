@@ -1,5 +1,31 @@
 # Registro de avances
 
+## 2026-11-06 — Cierre de sesión con caché pendiente de Neon (issue #17)
+
+- El usuario pidió abrir un PR de documentación y detener aquí el trabajo. El desarrollo funcional se retoma solo cuando lo indique.
+- develop permanece en 43d5e65: PR #14 autorizado e integrado, issue #13 cerrado. Incluye esquema/migración/hash; cached sigue siendo false. main permanece en 1fc6c33.
+- Implementación de caché publicada en feat/15-cache-neon, commit de0489d, PR #16 abierto en borrador e issue #15 abierto. CI quality aprobado: https://github.com/Angel17jc/Lingo/actions/runs/42319121831.
+- Última verificación de la rama de #16: 217 pruebas en 13 archivos, nueve escenarios de Chromium, tipos, lint, formato, historial de migraciones y build correctos. develop conserva las 182 pruebas de la base integrada.
+- Neon real pendiente: se dieron instrucciones para proyecto, rama development, conexión pooled y DATABASE_URL local. No se recibió confirmación de configuración/destino ni se aplicó SQL o verificó un acierto real. La ausencia de comprobación queda explícita.
+- El PR de cierre parte de develop en chore/17-cierre-sesion-cache e incorpora solo documentación. La guía publicada en #16 conserva los comandos de caché y limpieza que aún no están integrados.
+- Continuidad, instrucciones del repositorio y puntos de entrada actualizados para distinguir las ramas y retomar sin duplicar trabajo. .env.local se conserva sin leer ni mostrar valores.
+- Verificación documental: pnpm format:check y git diff --check correctos; seis archivos de documentación, sin cambios de aplicación. El CI del PR de cierre se comprueba en GitHub; las 217 pruebas citadas corresponden al PR funcional #16.
+- Comprobar el PR documental de #17 antes de asumir su fusión. #16 sigue en borrador y requiere Neon real, revisión y autorización independiente; fase 5 no iniciada.
+
+## 2026-11-06 — Fase 4, avance 2: caché y cliente Neon (issue #15)
+
+- Usuario autorizó la fusión de #14; integrado con squash en develop como 43d5e65, CI aprobado y issue #13 cerrado. Este avance parte de develop actualizado en feat/15-cache-neon.
+- Cliente Neon HTTP con Drizzle solo de servidor; creación perezosa con env.DATABASE_URL desde la composición. Señal de timeout de 3 segundos nueva por consulta, sin caché HTTP ni redirecciones y logger SQL desactivado.
+- Adaptador TranslationCache sobre el puerto existente. get actualiza hits y last_used_at con UPDATE ... RETURNING; set usa ON CONFLICT DO NOTHING. Valida las filas leídas y conserva el idioma detectado con origen omitido.
+- Servicio caché → proveedor → guardar. Un acierto devuelve cached true; la caída de lectura continúa con el proveedor y omite guardar en esa petición. La caída de escritura conserva la traducción. Warning técnico fijo, sin errores originales ni textos.
+- Límite compartido de caché de 1000 unidades UTF-16 de entrada; textos de 1001–3000 siguen traduciéndose. Hash v2 incluye proveedor; la función conserva v1 para llamadas existentes sin ese argumento.
+- Script db:cleanup con vista previa por defecto y borrado explícito con --apply; umbral estricto de más de 90 días desde last_used_at según el reloj de PostgreSQL. No hay tarea programada automática.
+- Verificación local: 217 pruebas en 13 archivos (35 nuevas), tipos, lint sin advertencias, formato y build de producción correctos. Adaptador/cliente/limpieza con Drizzle y driver reales y fetch simulado; servicio y API cubren aciertos, misses y caídas. Build con variables de prueba, sin servicios externos.
+- Nueve escenarios de Chromium correctos y comando terminado con exit 0. En Windows fue necesario cerrar manualmente el servidor temporal de Playwright verificado en 127.0.0.1:3100 con taskkill; no quedaron peticiones reales ni se consumió cuota. Comando de limpieza probado en consulta y aplicación con fetch simulado, sin borrar datos reales.
+- Instrucciones de Neon actualizadas en docs/cache-neon.md y facilitadas al usuario durante el trabajo. Confirmación de conexión y destino de desarrollo solicitada, pendiente de recibir antes de aplicar SQL o probar servicios reales.
+- Migración existente sin cambios; db:generate no produce SQL adicional y db:check correcto. La UI aprobada y las variables locales se conservan.
+- PR [#16](https://github.com/Angel17jc/Lingo/pull/16) abierto en borrador hacia develop; consultar allí el estado actual de quality. Pendientes: configuración/prueba real de Neon y revisión del usuario antes de integrar. La fase 4 sigue en curso; fase 5 no iniciada.
+
 ## 2026-11-06 — Fase 4, avance 1: esquema y hash (issue #13)
 
 - Continuidad, avance, CONTRIBUTING y guía original leídos antes de implementar. Documentación local de Next.js consultada para entorno y límites de servidor.
@@ -190,7 +216,7 @@
 
 ## Siguiente avance
 
-Leer docs/continuidad.md y comprobar el PR asociado al issue #13. Las fases 1–3 y el cierre #12 ya están integrados. Revisar e integrar el primer avance de fase 4 antes de crear el siguiente issue y rama para cliente Neon, adaptador, servicio y limpieza. La migración real espera la configuración local de Neon y la revisión de SQL/destino.
+Cuando el usuario indique continuar, leer docs/continuidad.md y comprobar el PR de cierre del issue #17 y el borrador #16. Retomar feat/15-cache-neon, actualizar la rama si se integró documentación y completar la configuración/prueba real de Neon antes de revisar e integrar la caché. Las fases 1–3 y la base #14 (43d5e65) ya están integradas; fase 5 sigue pendiente.
 
 ## Fases
 

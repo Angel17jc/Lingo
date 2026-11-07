@@ -1,6 +1,16 @@
 # Caché con Neon: preparación y migración
 
-Primer avance de fase 4, [issue #13](https://github.com/Angel17jc/Lingo/issues/13): esquema, SQL de migración y hash. La implementación de TranslationCache, su integración en el servicio y la limpieza corresponden al siguiente PR. La API continúa respondiendo cached: false.
+Base de fase 4 integrada mediante [PR #14](https://github.com/Angel17jc/Lingo/pull/14), commit 43d5e65; issue #13 cerrado. La implementación de TranslationCache, servicio y limpieza está publicada en el [PR #16](https://github.com/Angel17jc/Lingo/pull/16), todavía en borrador. En develop la API continúa respondiendo cached: false. El usuario cerró la sesión antes de configurar y verificar Neon real; retomar cuando indique continuar.
+
+## Preparar Neon al retomar
+
+1. Entrar en [Neon](https://console.neon.tech/) y crear un proyecto llamado lingo.
+2. En Branches → New branch, crear una rama development para las pruebas. [Guía de ramas](https://neon.com/docs/manage/branches).
+3. Pulsar Connect y seleccionar esa rama, la base de datos (se puede conservar neondb) y el rol ofrecido. Activar Connection pooling y copiar solo la URL PostgreSQL completa, sin el comando psql. [Guía de conexión](https://neon.com/docs/get-started/connect-neon).
+4. Cambiar únicamente DATABASE_URL en C:\Traductor\.env.local, entre comillas, conservando el resto del archivo y los parámetros de la URL. La cadena contiene contraseña; no compartirla en el chat ni en GitHub.
+5. Confirmar que el archivo está guardado e indicar solo proyecto, rama y base de datos para revisar el destino de desarrollo antes de migrar.
+
+La [guía completa de la implementación pendiente](https://github.com/Angel17jc/Lingo/blob/feat/15-cache-neon/docs/cache-neon.md) incluye segunda traducción y limpieza. Esos pasos requieren la rama del PR #16 o su integración; db:cleanup aún no existe en develop. Revisar primero [continuidad.md](continuidad.md) y el estado remoto para evitar repetir trabajo.
 
 ## Esquema preparado
 
@@ -15,7 +25,7 @@ Primer avance de fase 4, [issue #13](https://github.com/Angel17jc/Lingo/issues/1
 - created_at y last_used_at con zona horaria, inicializados con now().
 - Índice sobre last_used_at para la futura limpieza por antigüedad.
 
-La [migración 0000_translation_cache.sql](../src/server/db/migrations/0000_translation_cache.sql) crea únicamente la tabla y sus dos índices. Los metadatos en migrations/meta se versionan junto al SQL. El contador de hits, el límite de 1000 caracteres y la limpieza tras 90 días sin uso se implementarán en el adaptador y el script del siguiente avance.
+La [migración 0000_translation_cache.sql](../src/server/db/migrations/0000_translation_cache.sql) crea únicamente la tabla y sus dos índices. Los metadatos en migrations/meta se versionan junto al SQL. El contador de hits, el límite de 1000 caracteres y la limpieza tras 90 días sin uso están implementados en la rama de #16, pendientes de prueba real e integración.
 
 ## Clave de traducción
 
@@ -52,4 +62,4 @@ La aplicación de SQL a una base real queda pendiente de revisar esta entrega y 
 
 ## Siguiente avance
 
-Implementar el cliente Neon HTTP y el puerto TranslationCache ya definido, con incremento atómico de hits, upsert, límite de 1000 caracteres y limpieza por last_used_at. Integrar caché → proveedor → guardar, con pruebas de acierto, fallo de búsqueda y caída de la base. Después, verificar con Neon real que una segunda traducción idéntica responde cached: true sin llamar de nuevo a DeepL.
+Retomar el cliente Neon HTTP, el adaptador y el servicio ya implementados en feat/15-cache-neon (#16). Completar la configuración y verificación con Neon real: tabla y segunda traducción idéntica con cached: true sin llamar de nuevo a DeepL. Registrar el resultado y revisar el PR antes de autorizar su fusión. El cierre de sesión no inicia esa comprobación.
